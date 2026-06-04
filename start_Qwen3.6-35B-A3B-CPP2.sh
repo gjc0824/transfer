@@ -33,6 +33,12 @@ export HCCL_EXEC_TIMEOUT=204
 export HCCL_CONNECT_TIMEOUT=120
 export HCCL_DETERMINISTIC=true
 export LCCL_DETERMINISTIC=1
+# export PYTHONPATH=/home/g00955623/pp_mtp_ori/vllm:/home/g00955623/pp_mtp_ori/vllm-ascend:$PYTHONPATH
+# export VLLM_ASCEND_DEBUG_MTP_TOPK=5
+# export VLLM_ASCEND_DEBUG_MTP_ROWS=1
+# export VLLM_ASCEND_DEBUG_MTP_TOKENS=8
+# export VLLM_ASCEND_DEBUG_MTP_STATE=1
+# export VLLM_ASCEND_DEBUG_MTP=0
 # --speculative-config '{"num_speculative_tokens": 1, "method":"mtp"}' \
 
 vllm serve /dev/shm/data/Qwen3.6-35B-A3B \
@@ -48,7 +54,7 @@ vllm serve /dev/shm/data/Qwen3.6-35B-A3B \
   --max-num-batched-tokens 16384 \
   --gpu-memory-utilization 0.9 \
   --enable-chunked-prefill \
-  --enable-prefix-caching \
+  --no-enable-prefix-caching \
   --trust-remote-code \
   --additional-config '{
     "enable_cpu_binding":true,
@@ -62,5 +68,5 @@ vllm serve /dev/shm/data/Qwen3.6-35B-A3B \
   --no-enforce-eager \
   --safetensors-load-strategy 'prefetch' \
   --speculative-config '{"num_speculative_tokens": 3, "method":"mtp"}' \
-  --compilation-config '{"cudagraph_capture_sizes":[4,8,16,32,64,128], "cudagraph_mode": "FULL_DECODE_ONLY"}' \
+  --compilation-config '{"cudagraph_capture_sizes":[4,8,16,32,64], "cudagraph_mode": "FULL_DECODE_ONLY"}' \
   2>&1 | tee online.log
