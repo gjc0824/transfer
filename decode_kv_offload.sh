@@ -116,7 +116,9 @@ vllm serve /mnt/share/GLM-5.2-Provide-0610-W4A8 \
         "sfa_kv_offload_cpu_cache_config": {
             "dram_size_gb": 15,
             "cache_budget_ratio": 0.9
-        }
+        },
+        "sfa_kv_offload_debug": true,
+        "sfa_kv_offload_debug_max_logs": 32
     }' \
     2>&1 | tee online_1.log
     # --additional-config '{
